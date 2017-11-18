@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.android.psiak.Model.Dog;
 import com.example.android.psiak.Network.DummyDogDataService;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LeakCanary.install(getApplication());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
