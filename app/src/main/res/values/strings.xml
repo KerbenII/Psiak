@@ -11,4 +11,8 @@
     <string name="ups">Ups!</string>
     <string name="navigation_drawer_open">Otwórz</string>
     <string name="navigation_drawer_close">Zamknij</string>
+    <string name="title_activity_mvp">MVPActivity</string>
+    <string name="mvp_example_message">Dog\'s name</string>
+    <string name="mvp_btn_show_message">Show dog\'s name</string>
+    <string name="mvp_btn_save_message">Save name</string>
 </resources>
