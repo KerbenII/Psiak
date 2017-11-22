@@ -11,7 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.psiak.Model.Dog;
 import com.example.android.psiak.R;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,16 +24,12 @@ public class MVPActivity extends AppCompatActivity implements ContractMVP.View {
     /**
      * Here we store our presenter object
      */
-    private ContractMVP.Presenter presenterMVP;
+    private SimplePresenterMVP presenterMVP;
 
     @BindView(R.id.mvp_tv_example_message)
     TextView tvMessage;
-    @BindView(R.id.mvp_et_dog_name)
-    EditText etDogsName;
     @BindView(R.id.mvp_btn_show_message)
-    Button btnShowMessage;
-    @BindView(R.id.mvp_btn_save_name)
-    Button btnSaveDogsName;
+    Button btnShowAllDogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +39,14 @@ public class MVPActivity extends AppCompatActivity implements ContractMVP.View {
         setSupportActionBar(toolbar);
 
         // set our presenter
-        presenterMVP = new SimplePresenterMVP(this);
+        presenterMVP = new SimplePresenterMVP(InMemoryRepository.getInstance());
+        presenterMVP.attach(this);
 
     }
 
     @Override
-    public void showMessage(String message) {
-        tvMessage.setText(message);
+    public void showAllDogsNames(String dogsNamesList) {
+        tvMessage.setText(dogsNamesList);
     }
 
     @Override
@@ -60,11 +60,6 @@ public class MVPActivity extends AppCompatActivity implements ContractMVP.View {
      */
     @OnClick(R.id.mvp_btn_show_message)
     void showDogsName() {
-        presenterMVP.loadMessage();
-    }
-
-    @OnClick(R.id.mvp_btn_save_name)
-    void saveDogsName() {
-        presenterMVP.saveName(etDogsName.getText().toString());
+        presenterMVP.showAllDogs();
     }
 }

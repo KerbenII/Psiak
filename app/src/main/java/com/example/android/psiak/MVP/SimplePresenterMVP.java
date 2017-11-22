@@ -1,38 +1,35 @@
 package com.example.android.psiak.MVP;
 
+import com.example.android.psiak.Model.Dog;
+
+import java.util.List;
+
 /**
  * Created by Grzegorz on 20.11.2017.
  * Concrete implementation for ContractMVP.Presenter
  */
 
-public class SimplePresenterMVP implements ContractMVP.Presenter {
+public class SimplePresenterMVP extends BasePresenter<ContractMVP.View> implements ContractMVP.Presenter {
 
-    private DogMVP dogMVP;
+    private Repository repository;
     private ContractMVP.View viewMVP;
 
-    public SimplePresenterMVP(ContractMVP.View view) {
-        // this is not a good way to create object, but it's
-        // only for presentation purposes
-        this.dogMVP = new DogMVP();
-
-        // we bind the viewMVP to our presenter
-        this.viewMVP = view;
+    public SimplePresenterMVP(Repository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public void loadMessage() {
-
-        if (dogMVP.getDogName() == null) {
-            viewMVP.showMessage("There is no dog");
-        } else {
-            viewMVP.showMessage("Dog's name is " + dogMVP.getDogName());
+    public void showAllDogs() {
+        List<Dog> dogs = repository.getAll();
+        String dogsNamesList = "";
+        for (Dog dog : dogs) {
+            dogsNamesList.concat(" " + " \n" + Dog.getName());
         }
+        viewMVP.showAllDogsNames(dogsNamesList);
     }
 
     @Override
-    public void saveName(String name) {
-        // in this place we can, for example save data to the database,
-        // but for our example we simply set new name for the dog
-        dogMVP.setDogName("Reksio");
+    public void addDog(Dog dog) {
+        repository.add(dog);
     }
 }
